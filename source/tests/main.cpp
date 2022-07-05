@@ -1075,6 +1075,8 @@ past_last = list.erase( std::next(list.begin(),2) );
             { return value < a.value; }
             inline bool operator==( const Card &a ) const
             { return value == a.value; }
+            inline bool operator!=( const Card &a ) const
+            { return value != a.value; }
         };
         which_lib::list<Card> list_a{
             { 10, "clubs"},
@@ -1103,13 +1105,13 @@ past_last = list.erase( std::next(list.begin(),2) );
         *add_first = {100, "CLUBS"}; // Iterators must remain valid.
         *add_last = {80, "CLUBS"};
         which_lib::list<Card> list_r2{
-            { 4, "hearts" },
+            { 100, "CLUBS" },
             { 4, "clubs" },
             { 7, "spades" },
             { 8, "diamond" },
+            { 8, "CLUBS" },
+            { 10, "CLUBS"},
             { 80, "CLUBS" },
-            { 100, "CLUBS"},
-            { 10, "spades" },
         };
         EXPECT_EQ( list_r2, list_a ); // List A must be equal to list Result.
     }

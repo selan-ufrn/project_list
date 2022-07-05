@@ -139,6 +139,62 @@ int main( void )
         for( auto e : list2 )
             EXPECT_EQ ( e,i++ );;
     }
+    
+    {
+        BEGIN_TEST(tm, "AssignMethodRange","AssignMethodRange");
+        which_lib::list<int> list1{ 1, 2, 3, 4, 5 };
+        
+        // Testing assign in empty list
+        which_lib::list<int> list2;
+        list2.assign(list1.begin(), list1.end());
+        EXPECT_EQ( list1.size(), list2.size() );
+        EXPECT_EQ( list1, list2 );
+
+        // Testing assign in list with same size
+        which_lib::list<int> list3{ 5, 4, 6, 2, 1 };
+        list1.assign(list3.begin(), list3.end());
+        EXPECT_EQ( list1.size(), list3.size() );
+        EXPECT_EQ( list1, list3 );
+
+        // Testing assign in list with different size
+        which_lib::list<int> list4{ 5, 3, 4 };
+        list4.assign(list1.begin(), list1.end());
+        EXPECT_EQ( list1.size(), list4.size() );
+        EXPECT_EQ( list1, list4 );
+
+        // Testing assign in two empty lists
+        which_lib::list<int> list5, list6;
+        list5.assign(list6.begin(), list6.end());
+        EXPECT_EQ( list1.size(), list4.size() );
+        EXPECT_EQ( list5, list6 );
+    }
+    
+    {
+        BEGIN_TEST(tm, "AssignMethodInitializerList","AssignMethodInitializerList");
+        // Testing assign in empty list
+        which_lib::list<int> list1;
+        list1.assign({ 1, 2, 3, 4, 5 });
+        EXPECT_EQ( list1.size(), 5 );
+        EXPECT_EQ( list1, ( which_lib::list<int>{ 1, 2, 3, 4, 5 } ));
+
+        // Testing assign in list with same size
+        which_lib::list<int> list2{ 5, 4, 6, 2, 1 };
+        list2.assign({ 1, 2, 3, 4, 5 });
+        EXPECT_EQ( list2.size(), 5 );
+        EXPECT_EQ( list2, ( which_lib::list<int>{ 1, 2, 3, 4, 5 } ) );
+
+        // Testing assign in list with different size
+        which_lib::list<int> list3{ 5, 3, 4 };
+        list3.assign({ 1, 2, 3, 4, 5});
+        EXPECT_EQ( list3.size(), 5 );
+        EXPECT_EQ( list3, ( which_lib::list<int>{ 1, 2, 3, 4, 5 } ) );
+
+        // Testing assign in two empty lists
+        which_lib::list<int> list4;
+        list4.assign({});
+        EXPECT_EQ( list4.size(), 0 );
+        EXPECT_EQ( list4, ( which_lib::list<int>{} ) );
+    }
 
 #ifdef MOVE_SYNTAX_IMPLEMENTED  
     // // {
